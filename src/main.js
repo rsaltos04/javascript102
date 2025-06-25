@@ -23,3 +23,48 @@ const itemData = {
         score: 36
     }
 };
+
+document.addEventListener("DOMContentLoaded", function () {
+    const select = document.getElementById("items");
+    const displayImage = document.getElementById("displayImage");
+    const photographer = document.getElementById("photographer");
+    const description = document.getElementById("description");
+    const score = document.getElementById("score");
+    const increaseBtn = document.getElementById("increaseScore");
+    const decreaseBtn = document.getElementById("decreaseScore");
+
+    Object.entries(itemData).forEach(([key, item]) => {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = item.name;
+        select.appendChild(option);
+    });
+
+    
+    let currentKey = null;
+
+    select.addEventListener("change", function () {
+        currentKey = select.value;
+        if (itemData[currentKey]) {
+            const item = itemData[currentKey];
+            displayImage.src = item.image;
+            photographer.value = item.photographer;
+            description.value = item.description;
+            score.value = item.score;
+        }
+    });
+
+    increaseBtn.addEventListener("click", function () {
+        if (currentKey && itemData[currentKey]) {
+            itemData[currentKey].score++;
+            score.value = itemData[currentKey].score;
+        }
+    });
+
+    decreaseBtn.addEventListener("click", function () {
+        if (currentKey && itemData[currentKey]) {
+            itemData[currentKey].score--;
+            score.value = itemData[currentKey].score;
+        }
+    });
+});
